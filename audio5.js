@@ -513,6 +513,11 @@
         this.pause();
         // Ensures the player is set back to playing = false
         this.onPause();
+        try {
+          this.audio.setAttribute('src', '');
+        } catch (error) {
+          // Do nothing if this fails.
+        }
       }
     },
     /**
