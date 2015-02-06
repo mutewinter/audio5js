@@ -497,11 +497,13 @@
      * Create new audio instance
      */
     createAudio: function(){
-      this.audio = new Audio();
-      this.audio.autoplay = false;
-      this.audio.preload = 'auto';
-      this.audio.autobuffer = true;
-      this.bindEvents();
+      if (!this.audio) {
+        this.audio = new Audio();
+        this.audio.autoplay = false;
+        this.audio.preload = 'auto';
+        this.audio.autobuffer = true;
+        this.bindEvents();
+      }
     },
     /**
      * Destroy current audio instance
@@ -509,12 +511,8 @@
     destroyAudio: function(){
       if(this.audio){
         this.pause();
-        this.unbindEvents();
-        try {
-          this.audio.setAttribute('src', '');
-        } finally {
-          delete this.audio;
-        }
+        // Ensures the player is set back to playing = false
+        this.onPause();
       }
     },
     /**
